@@ -1,4 +1,4 @@
-﻿using CRUDOPS.Models;
+﻿using CRUDOPS.Infastructure.Database.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 

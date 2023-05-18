@@ -1,4 +1,4 @@
-namespace CRUDOPS.Models
+namespace CRUDOPS.Infastructure.Database.Models
 {
     public class ErrorViewModel
     {
