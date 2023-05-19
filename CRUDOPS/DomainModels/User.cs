@@ -4,14 +4,15 @@ namespace CRUDOPS.DomainModels
 {
     public class User
     {
+        public long Id { get; set; }
         [JsonProperty("gender")]
         public string Gender { get; set; }
 
         [JsonProperty("name")]
-        public Name Name { get; set; }
+        public string Name { get; set; }
 
         [JsonProperty("dob")]
-        public DateOfBirth Dob { get; set; }
+        public string Dob { get; set; }
 
         [JsonProperty("email")]
         public string Email { get; set; }
@@ -23,10 +24,10 @@ namespace CRUDOPS.DomainModels
         public string Cell { get; set; }
 
         [JsonProperty("location")]
-        public Location Location { get; set; }
+        public string Location { get; set; }
 
         [JsonProperty("picture")]
-        public Picture Picture { get; set; }
+        public string Picture { get; set; }
     }
 }
 

@@ -42,16 +42,17 @@ namespace CRUDOPS.Controllers
             return View(course);
         }
 
-        public IActionResult Edit(int id)
+        [HttpGet]
+        public ActionResult Edit(int id)
         {
-            var student = _courseRepository.GetAsync(id);
+            var course = _courseRepository.GetById(id);
 
-            if (student == null)
+            if (course == null)
             {
                 return NotFound();
             }
 
-            return View(student);
+            return View(course);
         }
 
         [HttpPost]
@@ -70,26 +71,27 @@ namespace CRUDOPS.Controllers
 
         public IActionResult Details(int id)
         {
-            var student = _courseRepository.GetAsync(id);
+            var course = _courseRepository.GetAsync(id);
 
-            if (student == null)
+            if (course == null)
             {
                 return NotFound();
             }
 
-            return View(student);
+            return View(course);
         }
 
         public IActionResult Delete(int id)
         {
-            var student = _courseRepository.GetAsync(id);
+            var course = _courseRepository.GetById(id);
 
-            if (student == null)
+            if (course == null)
             {
                 return NotFound();
             }
 
-            return View(student);
+           _courseRepository.Remove(course);
+            return RedirectToAction("Index");
         }
 
         [HttpPost, ActionName("Delete")]

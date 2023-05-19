@@ -3,6 +3,7 @@ using CRUDOPS.Infastructure.Database.Repositories;
 using CRUDOPS.Infastructure.Services;
 using CRUDOPS.Interfaces.Repositories;
 using CRUDOPS.Interfaces.Services;
+using CRUDOPS.Services;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Serilog.Formatting.Compact;
@@ -22,9 +23,22 @@ builder.Logging.AddConsole();
 
 builder.Services.AddDbContext<CrudOpsDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DatabaseConnectionString"));
+    options.UseSqlite(builder.Configuration.GetConnectionString("DatabaseConnectionString"));
 });
 
+string connectionString = "Data Source=crudops.db";
+builder.Services.AddTransient<DataSeeder>(provider => new DataSeeder(connectionString));
+using (var scope = builder.Services.BuildServiceProvider().CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<CrudOpsDbContext>();
+
+    // Ensure the database is created and migrated
+    dbContext.Database.EnsureCreated();
+    dbContext.Database.Migrate();
+
+    var dataSeeder = scope.ServiceProvider.GetRequiredService<DataSeeder>();
+    dataSeeder.SeedData();
+}
 
 builder.Services.AddTransient<IRandomUserApiClientService, RandomUserApiClientService>();
 
@@ -32,6 +46,7 @@ builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 builder.Services.AddScoped<ICourseRepository, CourseRepository>();
 builder.Services.AddScoped<IGradeRepository, GradeRepository>();
 builder.Services.AddScoped<IStudentCoursesRepository, StudentCoursesRepository>();
+
 var app = builder.Build();
 
 

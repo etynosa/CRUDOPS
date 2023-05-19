@@ -1,15 +1,16 @@
-﻿using CRUDOPS.Infastructure.Services;
+﻿using CRUDOPS.Infastructure.Database.Models;
+using CRUDOPS.Infastructure.Services;
 using CRUDOPS.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CRUDOPS.Controllers
 {
-    public class UserController : Controller
+    public class StudentController : Controller
     {
         private readonly IRandomUserApiClientService _randomUserApiClientService;
         private readonly ILogger _logger;
 
-        public UserController(IRandomUserApiClientService randomUserApiClientService, ILogger<UserController> logger)
+        public StudentController(IRandomUserApiClientService randomUserApiClientService, ILogger<StudentController> logger)
         {
             _randomUserApiClientService = randomUserApiClientService;
             _logger = logger;
@@ -21,9 +22,18 @@ namespace CRUDOPS.Controllers
 
             var users = await _randomUserApiClientService.GetRandomUsers(page, resultsPerPage);
 
+            var students = users.Select(user => new Student
+            {
+                Id = user.Id,
+                FirstName = user.Name,
+                LastName = user.Name,
+                Class = "",
+                DateOfBirth = new DateTime(),
+            }).ToList();
+
             _logger.LogInformation($"Fetched {users.Count} users.");
 
-            return View(users);
+            return View(students);
         }
 
         public async Task<IActionResult> Details(string id)
