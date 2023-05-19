@@ -1,26 +1,32 @@
-﻿@model List<Student>
+﻿@using CRUDOPS.Infastructure.Database.Models.CRUDOPS.Models;
+@model List<UserResult>
 
 <table class="table table-hover">
     <thead>
         <tr>
-            <th scope="col">Id</th>
-            <th scope="col">CourseName</th>
-            <th scope="col">CourseCode</th>
-            <th scope="col">CourseTitle</th>
+            <th scope="col">Firstname</th>
+            <th scope="col">Lastname</th>
+            <th scope="col">Gender</th>
+            <th scope="col">Email</th>
+            <th scope="col">Cell</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Location</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var obj in Model)
         {
             <tr class="table-active">
-                <td>@obj.Id</td>
-                <td>@obj.FirstName</td>
-                <td>@obj.LastName</td>
-                <td>@obj.DateOfBirth</td>
-                <td><button type="button" class="btn btn-primary">Edit</button></td>
-                <td><button type="button" class="btn btn-danger">Delete</button></td>
+                <td>@obj.Name.First</td>
+                <td>@obj.Name.Last</td>
+                <td>@obj.Gender</td>
+                <td>@obj.Email</td>
+                <td>@obj.Phone</td>
+                <td>@obj.Cell</td>
+                <td>@obj.Location.State @obj.Location.City @obj.Location.Country </td>
             </tr>
         }
 
     </tbody>
 </table>
+<td> <a href="@Url.Action("Index", new { page=1, resultsPerPage = 10 })" class="btn btn-primary">Next</a></td>

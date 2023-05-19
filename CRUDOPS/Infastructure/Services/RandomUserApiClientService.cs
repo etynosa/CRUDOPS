@@ -1,11 +1,12 @@
-﻿using CRUDOPS.DomainModels;
-using CRUDOPS.Infastructure.Database.Models;
+﻿using CRUDOPS.Infastructure.Database.Models;
+using CRUDOPS.Infastructure.Database.Models.CRUDOPS.Models;
 using CRUDOPS.Interfaces.Services;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.Collections;
 using System.Net.Http;
 using System.Text.Json.Serialization;
+using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
 
 namespace CRUDOPS.Infastructure.Services
 {
@@ -20,7 +21,7 @@ namespace CRUDOPS.Infastructure.Services
             _logger = logger;
         }
 
-        public async Task<List<User>> GetRandomUsers(int page, int resultsPerPage)
+        public async Task<List<UserResult>> GetRandomUsers(int page, int resultsPerPage)
         {
             _logger.LogInformation("Fetching random users...");
 
@@ -30,10 +31,30 @@ namespace CRUDOPS.Infastructure.Services
 
             var result = JsonConvert.DeserializeObject<UserResponse>(content);
 
-            return result.Results;
+            return result.Results.Select(r => new UserResult
+            {
+                Gender = r.Gender,
+                Email = r.Email,
+                Phone = r.Phone,
+                Cell = r.Cell,
+                Location = new UserLocation
+                {
+                    Street = r.Location.Street,
+                    City = r.Location.City,
+                    State = r.Location.State,
+                    Country = r.Location.Country,
+                },
+                Name = new UserName
+                {
+                    First = r.Name.First
+                    ,
+                    Last = r.Name.Last
+                },
+            }).ToList();
+
         }
 
-        public async Task<User> GetRandomUserById(string userId)
+        public async Task<UserResult> GetRandomUserById(string userId)
         {
             _logger.LogInformation("Fetching random user by ID...");
 
@@ -46,7 +67,7 @@ namespace CRUDOPS.Infastructure.Services
             return result.Results.FirstOrDefault();
         }
 
-        public async Task<List<User>> GetRandomUsers(int count)
+        public async Task<List<UserResult>> GetRandomUsers(int count)
         {
             _logger.LogInformation($"Fetching {count} random users...");
 

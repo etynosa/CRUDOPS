@@ -22,18 +22,9 @@ namespace CRUDOPS.Controllers
 
             var users = await _randomUserApiClientService.GetRandomUsers(page, resultsPerPage);
 
-            var students = users.Select(user => new Student
-            {
-                Id = user.Id,
-                FirstName = user.Name,
-                LastName = user.Name,
-                Class = "",
-                DateOfBirth = new DateTime(),
-            }).ToList();
-
             _logger.LogInformation($"Fetched {users.Count} users.");
 
-            return View(students);
+            return View(users);
         }
 
         public async Task<IActionResult> Details(string id)
