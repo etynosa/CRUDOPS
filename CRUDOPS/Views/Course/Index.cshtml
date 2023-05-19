@@ -1,0 +1,24 @@
+﻿@model IEnumerable<Course>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">CourseName</th>
+            <th scope="col">CourseCode</th>
+            <th scope="col">CourseTitle</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var obj in Model)
+        {
+            <tr class="table-active">
+                <td>@obj.Id</td>
+                <td>@obj.CourseName</td>
+                <td>@obj.CourseCode</td>
+                <td>@obj.CourseTitle</td>
+            </tr>
+        }
+
+    </tbody>
+</table>

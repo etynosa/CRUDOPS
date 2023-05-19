@@ -18,6 +18,10 @@ namespace CRUDOPS.Infastructure.Database.Repositories
         {
             return await dbContext.Set<TEntity>().Where(x => x.Id == Id).FirstOrDefaultAsync();
         }
+        public TEntity GetById(long Id)
+        {
+           return dbContext.Set<TEntity>().Where(x => x.Id == Id).FirstOrDefault();
+        }
 
         public async Task<List<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> filter = null)
         {
@@ -51,6 +55,7 @@ namespace CRUDOPS.Infastructure.Database.Repositories
             if (updateState)
             {
                 dbContext.Entry<TEntity>(entity).State = EntityState.Modified;
+
             }
         }
 
@@ -92,6 +97,32 @@ namespace CRUDOPS.Infastructure.Database.Repositories
         {
             dbContext.Entry<TEntity>(entity).State = EntityState.Detached;
         }
+
+        public List<TEntity> GetAllByPage(int page, int pageSize)
+        {
+           return dbContext.Set<TEntity>()
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+        }
+
+        public List<TEntity> GetSorted(Expression<Func<TEntity, object>> orderBy, bool isAscending)
+        {
+            var query = dbContext.Set<TEntity>().AsQueryable();
+
+            if (isAscending)
+                query = query.OrderBy(orderBy);
+            else
+                query = query.OrderByDescending(orderBy);
+
+            return query.ToList();
+        }
+
+        public IEnumerable<TEntity> GetAll()
+        {
+            return dbContext.Set<TEntity>().ToList();
+        }
+
 
         private void PrepareEntityForAdd(TEntity entity)
         {

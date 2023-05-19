@@ -1,4 +1,8 @@
 using CRUDOPS.Infastructure.Database;
+using CRUDOPS.Infastructure.Database.Repositories;
+using CRUDOPS.Infastructure.Services;
+using CRUDOPS.Interfaces.Repositories;
+using CRUDOPS.Interfaces.Services;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Serilog.Formatting.Compact;
@@ -21,6 +25,13 @@ builder.Services.AddDbContext<CrudOpsDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DatabaseConnectionString"));
 });
 
+
+builder.Services.AddTransient<IRandomUserApiClientService, RandomUserApiClientService>();
+
+builder.Services.AddScoped<IStudentRepository, StudentRepository>();
+builder.Services.AddScoped<ICourseRepository, CourseRepository>();
+builder.Services.AddScoped<IGradeRepository, GradeRepository>();
+builder.Services.AddScoped<IStudentCoursesRepository, StudentCoursesRepository>();
 var app = builder.Build();
 
 
