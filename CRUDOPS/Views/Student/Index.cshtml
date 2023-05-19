@@ -23,7 +23,9 @@
                 <td>@obj.Email</td>
                 <td>@obj.Phone</td>
                 <td>@obj.Cell</td>
-                <td>@obj.Location.State @obj.Location.City @obj.Location.Country </td>
+                <td>@obj.Location.State, @obj.Location.City @obj.Location.Country </td>
+               <td> <a href="@Url.Action("Details", new { id= obj.Id })" class="btn btn-primary">Get Details</a></td>
+
             </tr>
         }
 

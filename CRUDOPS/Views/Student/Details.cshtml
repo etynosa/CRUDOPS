@@ -1,0 +1,50 @@
+﻿@using CRUDOPS.Infastructure.Database.Models.CRUDOPS.Models;
+@model UserResult
+<h1>User Details</h1>
+<form class="container-sm">
+    <div class="Form-row flex-row">
+        <div class="form-group mt-3 col-md-6">
+            <label for="Firstname">Firstname</label>
+            <input type="text" class="form-control" id="Firstname" name="Firstname" value="@Model.Name.First" />
+        </div>
+        <div class="form-group mt-3 col-md-6">
+            <label for="Lastname">Lastname</label>
+            <input type="text" class="form-control" id="Lastname" name="Lastname" value="@Model.Name.Last" />
+        </div>
+    </div>
+   <div class="form-row">
+        <div class="form-group col-sm-4 mt-3">
+            <label for="Gender">Gender</label>
+            <input type="text" class="form-control" id="Gender" name="Gender" value="@Model.Gender" />
+        </div>
+        <div class="form-group col-sm-4 mt-3">
+            <label for="Email">Email</label>
+            <input type="text" class="form-control" id="Email" name="Email" value="@Model.Email" />
+        </div>
+        <div class="form-group col-sm-4 mt-3">
+            <label for="Phone">Phone</label>
+            <input type="text" class="form-control" id="Phone" name="Phone" value="@Model.Phone" />
+        </div>
+        <div class="form-group col-sm-4 mt-3">
+            <label for="Cell">Cell</label>
+            <input type="text" class="form-control" id="Cell" name="Cell" value="@Model.Cell" />
+        </div>
+   </div>
+    
+    <div class="form-check-inline form-row">
+        <div class="col mt-3">
+            <label for="City">City</label>
+            <input type="text" class="form-control" id="City" name="City" value="@Model.Location.City" />
+        </div>
+        <div class="col mt-3">
+            <label for="State">State</label>
+            <input type="text" class="form-control" id="State" name="State" value="@Model.Location.State" />
+        </div>
+        <div class="col mt-3">
+            <label for="Country">Country</label>
+            <input type="text" class="form-control" id="Country" name="Country" value="@Model.Location.Country" />
+        </div>
+        
+    </div>
+   
+</form>
